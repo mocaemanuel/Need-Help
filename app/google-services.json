@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "182029023402",
+    "firebase_url": "https://needhelp-d6885.firebaseio.com",
+    "project_id": "needhelp-d6885",
+    "storage_bucket": "needhelp-d6885.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182029023402:android:c8248ed2ded8a034",
+        "android_client_info": {
+          "package_name": "com.brainiac.mocae.needhelp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "182029023402-i20n6tp49q3069t74lrf0me390o5m6c6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrGrNQkijoFvkCNq6NCd8Js2JFtai8U-4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
