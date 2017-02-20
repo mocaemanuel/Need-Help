@@ -10,6 +10,6 @@ public class HelpRequest{
     public Integer NumberOfPeople;
     public String StartDate;
     public String EndDate;
-
+    public String Tag;
 
 }

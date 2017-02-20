@@ -99,6 +99,22 @@
                 android:id="@+id/endDateTxtView"
                 style="@android:style/TextAppearance.DeviceDefault.Large" />
 
+            <TextView
+                android:text="@string/help_request_tag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#123456"
+                android:layout_marginTop="20dp"
+                style="@android:style/TextAppearance.DeviceDefault.Large" />
+
+            <TextView
+                android:text=" "
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:id="@+id/tagTxtView"
+                style="@android:style/TextAppearance.DeviceDefault.Large" />
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

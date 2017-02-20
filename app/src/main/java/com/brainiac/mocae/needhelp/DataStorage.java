@@ -24,4 +24,5 @@ public class DataStorage {
     public void saveRequest(HelpRequest request) {
         helpRequests.add(request);
     }
+
 }

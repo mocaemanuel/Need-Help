@@ -8,6 +8,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.facebook.login.widget.ProfilePictureView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -28,12 +29,14 @@ public class MainActivity extends AppCompatActivity {
     private CallbackManager mCallbackManager;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private ProfilePictureView profilePictureView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
+        profilePictureView = (ProfilePictureView) findViewById(R.id.profilePictureView);
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
+                    profilePictureView.setProfileId(user.getUid());
                     Log.d("NeedHelp", "onAuthStateChanged:signed_in:" + user.getUid());
                 } else {
                     // User is signed out

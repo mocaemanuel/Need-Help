@@ -11,6 +11,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     private TextView peopleTxtView;
     private TextView startDateTxtView;
     private TextView endDateTxtView;
+    private TextView tagTxtView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +22,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         peopleTxtView = (TextView) findViewById(R.id.minRequiredPeopleTxtView);
         startDateTxtView = (TextView) findViewById(R.id.startDateTxtView);
         endDateTxtView = (TextView) findViewById(R.id.endDateTxtView);
+        tagTxtView = (TextView) findViewById(R.id.tagTxtView);
 
         int pos = getIntent().getIntExtra("HelpRequest", -1);
         display(DataStorage.getInstance().getHelpRequests().get(pos));
@@ -32,5 +34,6 @@ public class EventDetailsActivity extends AppCompatActivity {
         peopleTxtView.setText("" + helpRequest.NumberOfPeople);
         startDateTxtView.setText(helpRequest.StartDate);
         endDateTxtView.setText(helpRequest.EndDate);
+        tagTxtView.setText(helpRequest.Tag);
     }
 }

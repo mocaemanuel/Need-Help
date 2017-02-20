@@ -90,6 +90,21 @@
                 android:id="@+id/endDateEditText"
                 android:focusableInTouchMode="false"/>
 
+            <TextView
+                android:text="@string/help_request_tag"
+                style="@android:style/TextAppearance.DeviceDefault.Large"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                style="@android:style/TextAppearance.DeviceDefault.Large"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:focusable="false"
+                android:id="@+id/tagEditText"
+                android:focusableInTouchMode="false"/>
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

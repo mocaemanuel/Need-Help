@@ -13,6 +13,7 @@ public class AskHelpActivity extends AppCompatActivity {
     private EditText txtPeople;
     private EditText txtStartDate;
     private EditText txtEndDate;
+    private EditText txtTag;
     private static Boolean isShowingDate = false;
     private View.OnClickListener dateClickListener;
 
@@ -26,6 +27,7 @@ public class AskHelpActivity extends AppCompatActivity {
         txtPeople = (EditText) findViewById(R.id.minRequiredPeopleEditText);
         txtPeople.setInputType(InputType.TYPE_CLASS_NUMBER);
         txtStartDate = (EditText) findViewById(R.id.dateEditText);
+        txtTag = (EditText) findViewById(R.id.tagEditText);
         dateClickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
@@ -70,7 +72,8 @@ public class AskHelpActivity extends AppCompatActivity {
         if (validateEditText(txtName) == false ||
                 validateEditText(txtDescription) == false ||
                 validateEditText(txtPeople) == false ||
-                validateEditText(txtStartDate) == false) {
+                validateEditText(txtStartDate) == false ||
+                validateEditText(txtTag) == false) {
             return ;
         }
 
@@ -80,6 +83,7 @@ public class AskHelpActivity extends AppCompatActivity {
         helpRequest.NumberOfPeople = Integer.parseInt(txtPeople.getText().toString());
         helpRequest.StartDate = txtStartDate.getText().toString();
         helpRequest.EndDate = txtEndDate.getText().toString();
+        helpRequest.Tag = txtTag.getText().toString();
 
         DataStorage.getInstance().saveRequest(helpRequest);
 
