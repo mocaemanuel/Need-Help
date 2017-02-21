@@ -6,6 +6,7 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.facebook.login.widget.ProfilePictureView;
@@ -16,6 +17,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -30,12 +33,21 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private ProfilePictureView profilePictureView;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        HelpRequest helpRequest = new HelpRequest();
+        helpRequest.Description = "gdjsss";
+        mDatabase.child("helpRequest").setValue(helpRequest);
+
+
+
         profilePictureView = (ProfilePictureView) findViewById(R.id.profilePictureView);
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -44,10 +56,12 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
-                    profilePictureView.setProfileId(user.getUid());
-                    Log.d("NeedHelp", "onAuthStateChanged:signed_in:" + user.getUid());
+                    Profile profile = Profile.getCurrentProfile();
+                    profilePictureView.setProfileId(profile.getId());
+                    Log.d("NeedHelp", "onAuthStateChanged:signed_in:" + profile.getId());
                 } else {
                     // User is signed out
+                    profilePictureView.setProfileId(null);
                     Log.d("NeedHelp", "onAuthStateChanged:signed_out");
                 }
                 // ...

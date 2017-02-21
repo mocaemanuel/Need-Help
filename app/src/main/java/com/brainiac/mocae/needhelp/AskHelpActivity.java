@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 
@@ -14,6 +15,8 @@ public class AskHelpActivity extends AppCompatActivity {
     private EditText txtStartDate;
     private EditText txtEndDate;
     private EditText txtTag;
+    private EditText txtLocation;
+    private CheckBox txtLocationCheckBox;
     private static Boolean isShowingDate = false;
     private View.OnClickListener dateClickListener;
 
@@ -22,12 +25,16 @@ public class AskHelpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ask_help);
 
+        //GPSTracker mGPS = new GPSTracker(this);
+
         txtName = (EditText) findViewById(R.id.nameEditText);
         txtDescription = (EditText) findViewById(R.id.descriptionEditText);
         txtPeople = (EditText) findViewById(R.id.minRequiredPeopleEditText);
         txtPeople.setInputType(InputType.TYPE_CLASS_NUMBER);
         txtStartDate = (EditText) findViewById(R.id.dateEditText);
         txtTag = (EditText) findViewById(R.id.tagEditText);
+        txtLocation = (EditText) findViewById(R.id.locationEditText);
+        txtLocationCheckBox = (CheckBox) findViewById(R.id.autoLocationCheckBox);
         dateClickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
@@ -65,6 +72,14 @@ public class AskHelpActivity extends AppCompatActivity {
             return false;
         }
 
+        if (txtLocationCheckBox.isChecked()){
+            GPSTracker mGPS = new GPSTracker(this);
+
+            if(mGPS.canGetLocation ) {
+                mGPS.getLocation();
+            }
+        }
+
         return true;
     }
 
@@ -84,6 +99,7 @@ public class AskHelpActivity extends AppCompatActivity {
         helpRequest.StartDate = txtStartDate.getText().toString();
         helpRequest.EndDate = txtEndDate.getText().toString();
         helpRequest.Tag = txtTag.getText().toString();
+        helpRequest.Location = txtLocation.getText().toString();
 
         DataStorage.getInstance().saveRequest(helpRequest);
 

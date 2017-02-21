@@ -11,5 +11,6 @@ public class HelpRequest{
     public String StartDate;
     public String EndDate;
     public String Tag;
+    public String Location;
 
 }
