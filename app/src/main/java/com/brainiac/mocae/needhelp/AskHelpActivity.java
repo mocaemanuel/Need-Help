@@ -73,11 +73,9 @@ public class AskHelpActivity extends AppCompatActivity {
         }
 
         if (txtLocationCheckBox.isChecked()){
-            GPSTracker mGPS = new GPSTracker(this);
+            Intent intent = new Intent(this, MapsActivity.class);
+            startActivity(intent);
 
-            if(mGPS.canGetLocation ) {
-                mGPS.getLocation();
-            }
         }
 
         return true;

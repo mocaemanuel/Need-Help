@@ -3,17 +3,23 @@ package com.brainiac.mocae.needhelp;
 /**
  * Created by mocae on 2/20/2017.
  */
+import android.*;
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
-
+/*
 public final class GPSTracker implements LocationListener {
 
     private final Context mContext;
@@ -45,13 +51,34 @@ public final class GPSTracker implements LocationListener {
         getLocation();
     }
 
-    /**
-     * Function to get the user's current location
-     *
-     * @return
-     */
     public Location getLocation() {
         try {
+            // Here, thisActivity is the current activity
+            if (ContextCompat.checkSelfPermission(this,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                // Should we show an explanation?
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                    // Show an explanation to the user *asynchronously* -- don't block
+                    // this thread waiting for the user's response! After the user
+                    // sees the explanation, try again to request the permission.
+
+                } else {
+
+                    // No explanation needed, we can request the permission.
+                    //if (Build.VERSION.SDK_INT > 23)
+                    //ActivityCompat.requestPermissions(this,
+                         ///   new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                          //  MY_PERMISSION_ACCESS_FINE_LOCATION);
+
+                    // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                    // app-defined int constant. The callback method gets the
+                    // result of the request.
+                }
+            }
             locationManager = (LocationManager) mContext
                     .getSystemService(Context.LOCATION_SERVICE);
 
@@ -115,19 +142,12 @@ public final class GPSTracker implements LocationListener {
         return location;
     }
 
-    /**
-     * Stop using GPS listener Calling this function will stop using GPS in your
-     * app
-     * */
     public void stopUsingGPS() {
         if (locationManager != null) {
             locationManager.removeUpdates(GPSTracker.this);
         }
     }
 
-    /**
-     * Function to get latitude
-     * */
     public double getLatitude() {
         if (location != null) {
             latitude = location.getLatitude();
@@ -137,9 +157,6 @@ public final class GPSTracker implements LocationListener {
         return latitude;
     }
 
-    /**
-     * Function to get longitude
-     * */
     public double getLongitude() {
         if (location != null) {
             longitude = location.getLongitude();
@@ -149,19 +166,10 @@ public final class GPSTracker implements LocationListener {
         return longitude;
     }
 
-    /**
-     * Function to check GPS/wifi enabled
-     *
-     * @return boolean
-     * */
     public boolean canGetLocation() {
         return this.canGetLocation;
     }
 
-    /**
-     * Function to show settings alert dialog On pressing Settings button will
-     * lauch Settings Options
-     * */
     public void showSettingsAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
 
@@ -210,4 +218,4 @@ public final class GPSTracker implements LocationListener {
     public void onStatusChanged(String provider, int status, Bundle extras) {
     }
 
-}
+}*/
