@@ -1,7 +1,11 @@
 package com.brainiac.mocae.needhelp;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -14,20 +18,22 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
         // Include the OnCreate() method here too, as described above.
         private Marker centerMarker;
+        private GPSTracker gpsTracker;
+        private LatLng location;
         @Override
         public void onMapReady(final GoogleMap googleMap) {
-            // Add a marker in Sydney, Australia,
-            // and move the map's camera to the same location.
+                location = new LatLng(gpsTracker.getLatitude(), gpsTracker.getLongitude());
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 20));
+                centerMarker = googleMap.addMarker(new MarkerOptions().position(location));
             googleMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
                 @Override
                 public void onCameraMove() {
-                    LatLng center = googleMap.getCameraPosition().target;
-
+                    location = googleMap.getCameraPosition().target;
                     if (centerMarker == null) {
-                        centerMarker = googleMap.addMarker(new MarkerOptions().position(center));
+                        centerMarker = googleMap.addMarker(new MarkerOptions().position(location));
                     }
                     else
-                        centerMarker.setPosition(center);
+                        centerMarker.setPosition(location);
                 }
             });
         }
@@ -35,12 +41,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            // Retrieve the content view that renders the map.
             setContentView(R.layout.activity_maps);
-            // Get the SupportMapFragment and request notification
-            // when the map is ready to be used.
+            gpsTracker = new GPSTracker(getApplicationContext(),this);
+            gpsTracker.getLocation();
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.map);
             mapFragment.getMapAsync(this);
+        }
+
+        public void onOkClick (View view) {
+            Intent intent = new Intent("com.brainiac.mocae.RESULT_ACTION", Uri.parse("content://result_uri"));
+            intent.putExtra("LOCATION", location);
+            setResult(Activity.RESULT_OK,intent);
+            finish();
+
+
         }
     }

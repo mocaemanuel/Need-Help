@@ -74,11 +74,17 @@ public class AskHelpActivity extends AppCompatActivity {
 
         if (txtLocationCheckBox.isChecked()){
             Intent intent = new Intent(this, MapsActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, 1);
 
         }
 
         return true;
+    }
+
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent data){
+       if (requestCode == 1)
+        txtLocation.setText(data.getCharSequenceExtra("LOCATION").toString());
     }
 
     public void onBtnSaveHelpRequest(View view) {
