@@ -1,7 +1,10 @@
 package com.brainiac.mocae.needhelp;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 public class EventDetailsActivity extends AppCompatActivity {
@@ -12,6 +15,8 @@ public class EventDetailsActivity extends AppCompatActivity {
     private TextView startDateTxtView;
     private TextView endDateTxtView;
     private TextView tagTxtView;
+    private TextView locationTxtView;
+    private String location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +28,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         startDateTxtView = (TextView) findViewById(R.id.startDateTxtView);
         endDateTxtView = (TextView) findViewById(R.id.endDateTxtView);
         tagTxtView = (TextView) findViewById(R.id.tagTxtView);
+        locationTxtView = (TextView) findViewById(R.id.locationTxtView);
 
         int pos = getIntent().getIntExtra("HelpRequest", -1);
         display(DataStorage.getInstance().getHelpRequests().get(pos));
@@ -35,5 +41,14 @@ public class EventDetailsActivity extends AppCompatActivity {
         startDateTxtView.setText(helpRequest.StartDate);
         endDateTxtView.setText(helpRequest.EndDate);
         tagTxtView.setText(helpRequest.Tag);
+        locationTxtView.setText(helpRequest.Location);
+        location = helpRequest.Location;
+    }
+
+    public void onLocationClick (View view) {
+        Intent intent = new Intent(this, MapsActivity.class);
+        intent.putExtra("LOCATION", location);
+        setResult(Activity.RESULT_OK,intent);
+        startActivity(intent);
     }
 }

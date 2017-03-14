@@ -6,6 +6,7 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 
 public class AskHelpActivity extends AppCompatActivity {
@@ -15,8 +16,7 @@ public class AskHelpActivity extends AppCompatActivity {
     private EditText txtStartDate;
     private EditText txtEndDate;
     private EditText txtTag;
-    private EditText txtLocation;
-    private CheckBox txtLocationCheckBox;
+    private TextView txtLocation;
     private static Boolean isShowingDate = false;
     private View.OnClickListener dateClickListener;
 
@@ -25,16 +25,13 @@ public class AskHelpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ask_help);
 
-        //GPSTracker mGPS = new GPSTracker(this);
-
         txtName = (EditText) findViewById(R.id.nameEditText);
         txtDescription = (EditText) findViewById(R.id.descriptionEditText);
         txtPeople = (EditText) findViewById(R.id.minRequiredPeopleEditText);
         txtPeople.setInputType(InputType.TYPE_CLASS_NUMBER);
         txtStartDate = (EditText) findViewById(R.id.dateEditText);
         txtTag = (EditText) findViewById(R.id.tagEditText);
-        txtLocation = (EditText) findViewById(R.id.locationEditText);
-        txtLocationCheckBox = (CheckBox) findViewById(R.id.autoLocationCheckBox);
+        txtLocation = (TextView) findViewById(R.id.locationEditText);
         dateClickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
@@ -71,21 +68,27 @@ public class AskHelpActivity extends AppCompatActivity {
             txt.setError("fill in");
             return false;
         }
-
-        if (txtLocationCheckBox.isChecked()){
-            Intent intent = new Intent(this, MapsActivity.class);
-            startActivityForResult(intent, 1);
-
-        }
-
         return true;
+    }
+
+    public void onLocationClick(View view){
+        Intent intent = new Intent(this, MapsActivity.class);
+        if (txtLocation.getText() != "") {
+            intent.putExtra("NEWLOCATION", txtLocation.getText());
+        }
+        startActivityForResult(intent, 1);
     }
 
     @Override
     protected void onActivityResult (int requestCode, int resultCode, Intent data){
-       if (requestCode == 1)
-        txtLocation.setText(data.getCharSequenceExtra("LOCATION").toString());
+       if (requestCode == 1) {
+           if (data != null) {
+               txtLocation.setText(data.getCharSequenceExtra("LOCATION").toString());
+           }
+       }
     }
+
+
 
     public void onBtnSaveHelpRequest(View view) {
         if (validateEditText(txtName) == false ||

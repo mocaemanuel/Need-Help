@@ -22,8 +22,24 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         private LatLng location;
         @Override
         public void onMapReady(final GoogleMap googleMap) {
+            Intent data = getIntent();
+            if (data != null) {
+                String newLocation = data.getCharSequenceExtra("NEWLOCATION").toString();
+                if (newLocation != null) {
+                    String lat[] = newLocation.split(" ");
+                    try {
+                        Double tmp1 = Double.parseDouble(lat[0]);
+                        Double tmp2 = Double.parseDouble(lat[1]);
+                        location = new LatLng(tmp1, tmp2);
+                    } catch (NumberFormatException ex) {
+                    }
+                }
+            }
+
+            if (location == null) {
                 location = new LatLng(gpsTracker.getLatitude(), gpsTracker.getLongitude());
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 20));
+            }
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 18));
                 centerMarker = googleMap.addMarker(new MarkerOptions().position(location));
             googleMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
                 @Override
@@ -50,11 +66,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         public void onOkClick (View view) {
-            Intent intent = new Intent("com.brainiac.mocae.RESULT_ACTION", Uri.parse("content://result_uri"));
-            intent.putExtra("LOCATION", location);
+            Intent intent = new Intent(this, AskHelpActivity.class);
+            intent.putExtra("LOCATION", location.latitude + " " + location.longitude);
             setResult(Activity.RESULT_OK,intent);
             finish();
-
-
         }
     }

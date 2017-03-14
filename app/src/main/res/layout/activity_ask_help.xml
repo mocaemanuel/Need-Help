@@ -101,9 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:focusable="false"
-                android:id="@+id/tagEditText"
-                android:focusableInTouchMode="false"/>
+                android:id="@+id/tagEditText" />
 
             <TextView
                 android:text="Location"
@@ -111,21 +109,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <EditText
+            <TextView
                 style="@android:style/TextAppearance.DeviceDefault.Large"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:focusable="false"
-                android:id="@+id/locationEditText"
-                android:focusableInTouchMode="false"/>
-
-            <CheckBox
-                android:text="@string/help_request_auto_location"
-                style="@android:style/TextAppearance.DeviceDefault.Large"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/autoLocationCheckBox"/>
+                android:textColor="#9D9FA2"
+                android:textStyle="italic"
+                android:text="click to access maps"
+                android:onClick="onLocationClick"
+                android:id="@+id/locationEditText" />
 
             <Button
                 android:layout_width="match_parent"
