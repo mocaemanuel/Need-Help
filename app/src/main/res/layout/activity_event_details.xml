@@ -116,7 +116,7 @@
                 style="@android:style/TextAppearance.DeviceDefault.Large" />
 
             <TextView
-                android:text="@string/help_request_tag"
+                android:text="@string/help_request_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#123456"
@@ -129,6 +129,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:id="@+id/locationTxtView"
+                android:onClick="onLocationClick"
                 style="@android:style/TextAppearance.DeviceDefault.Large" />
 
             <Button

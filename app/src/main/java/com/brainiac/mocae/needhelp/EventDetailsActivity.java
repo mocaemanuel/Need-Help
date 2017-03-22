@@ -47,8 +47,8 @@ public class EventDetailsActivity extends AppCompatActivity {
 
     public void onLocationClick (View view) {
         Intent intent = new Intent(this, MapsActivity.class);
-        intent.putExtra("LOCATION", location);
-        setResult(Activity.RESULT_OK,intent);
+        intent.putExtra("NEWLOCATION", location);
+        //setResult(Activity.RESULT_OK,intent);
         startActivity(intent);
     }
 }

@@ -23,6 +23,7 @@
                 android:text="@string/help_request_name"
                 style="@android:style/TextAppearance.DeviceDefault.Large"
                 android:layout_width="match_parent"
+                android:textColor="#123456"
                 android:layout_height="wrap_content" />
 
             <EditText
@@ -31,8 +32,10 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:id="@+id/nameEditText" />
+
             <TextView
                 android:text="@string/help_request_description"
+                android:textColor="#123456"
                 style="@android:style/TextAppearance.DeviceDefault.Large"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -49,6 +52,7 @@
 
             <TextView
                 android:text="@string/help_request_people"
+                android:textColor="#123456"
                 style="@android:style/TextAppearance.DeviceDefault.Large"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -62,6 +66,7 @@
 
             <TextView
                 android:text="@string/help_request_start_date"
+                android:textColor="#123456"
                 style="@android:style/TextAppearance.DeviceDefault.Large"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -77,6 +82,7 @@
 
             <TextView
                 android:text="@string/help_request_end_date"
+                android:textColor="#123456"
                 style="@android:style/TextAppearance.DeviceDefault.Large"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -92,6 +98,7 @@
 
             <TextView
                 android:text="@string/help_request_tag"
+                android:textColor="#123456"
                 style="@android:style/TextAppearance.DeviceDefault.Large"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -104,7 +111,8 @@
                 android:id="@+id/tagEditText" />
 
             <TextView
-                android:text="Location"
+                android:text="@string/help_request_location"
+                android:textColor="#123456"
                 style="@android:style/TextAppearance.DeviceDefault.Large"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -116,7 +124,7 @@
                 android:inputType="text"
                 android:textColor="#9D9FA2"
                 android:textStyle="italic"
-                android:text="click to access maps"
+                android:text="@string/help_request_location_click"
                 android:onClick="onLocationClick"
                 android:id="@+id/locationEditText" />
 
@@ -124,6 +132,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/help_request_save"
+                android:textColor="#123456"
                 android:id="@+id/btnHelpRequestSave"
                 android:onClick="onBtnSaveHelpRequest"/>
 

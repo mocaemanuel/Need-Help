@@ -31,7 +31,6 @@ public class DataStorage {
     }
 
     public void saveRequest(HelpRequest request) {
-
         mDatabase.child("helpRequest").setValue(request);
         helpRequests.add(request);
     }
