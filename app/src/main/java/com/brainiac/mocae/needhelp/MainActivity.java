@@ -7,6 +7,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.Profile;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.facebook.login.widget.ProfilePictureView;
@@ -20,12 +21,19 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,20 +48,38 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
 
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "com.facebook.samples.loginhowto",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        } catch (NoSuchAlgorithmException e) {
+
+        }
+
         profilePictureView = (ProfilePictureView) findViewById(R.id.profilePictureView);
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
+                if (user != null && Profile.getCurrentProfile() != null) {
+                    // User is signed ina
+                    profilePictureView.setVisibility(View.VISIBLE);
                     Profile profile = Profile.getCurrentProfile();
                     profilePictureView.setProfileId(profile.getId());
                     Log.d("NeedHelp", "onAuthStateChanged:signed_in:" + profile.getId());
                 } else {
                     // User is signed out
+                    Profile.setCurrentProfile(null);
                     profilePictureView.setProfileId(null);
+                    profilePictureView.setVisibility(View.INVISIBLE);
                     Log.d("NeedHelp", "onAuthStateChanged:signed_out");
                 }
                 // ...
@@ -81,6 +107,18 @@ public class MainActivity extends AppCompatActivity {
             public void onError(FacebookException error) {
                 Log.d("NeedHelp", "facebook:onError", error);
                 // ...
+            }
+        });
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("NeedHelp", "loginOnClick");
+                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                    FirebaseAuth.getInstance().signOut();
+                    Profile.setCurrentProfile(null);
+                    profilePictureView.setProfileId(null);
+                    profilePictureView.setVisibility(View.INVISIBLE);
+                }
             }
         });
     }

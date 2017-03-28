@@ -12,5 +12,6 @@ public class HelpRequest{
     public String EndDate;
     public String Tag;
     public String Location;
+    public String adminID;
 
 }
