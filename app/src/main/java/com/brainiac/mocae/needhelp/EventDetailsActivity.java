@@ -5,7 +5,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class EventDetailsActivity extends AppCompatActivity {
 
@@ -16,7 +20,12 @@ public class EventDetailsActivity extends AppCompatActivity {
     private TextView endDateTxtView;
     private TextView tagTxtView;
     private TextView locationTxtView;
+    private Button joinButton;
     private String location;
+    private HelpRequest mCurrentEvent;
+    private UserJoinedRequest mCurrentUserJoinedEvents;
+
+    private String mCurrentUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +38,19 @@ public class EventDetailsActivity extends AppCompatActivity {
         endDateTxtView = (TextView) findViewById(R.id.endDateTxtView);
         tagTxtView = (TextView) findViewById(R.id.tagTxtView);
         locationTxtView = (TextView) findViewById(R.id.locationTxtView);
+        joinButton = (Button) findViewById(R.id.joinEventBtn);
+
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        mCurrentUserId = user.getUid();
 
         int pos = getIntent().getIntExtra("HelpRequest", -1);
-        display(DataStorage.getInstance().getHelpRequests().get(pos));
+        mCurrentEvent = DataStorage.getInstance().getHelpRequests(false).get(pos);
+
+        boolean isJoined = DataStorage.getInstance().isCurrentUserJoinedOnEvent(mCurrentUserId, mCurrentEvent.ID);
+        joinButton.setText(isJoined ? R.string.unjoin_button : R.string.join_button);
+
+        display(mCurrentEvent);
     }
 
     private void display (HelpRequest helpRequest) {
@@ -48,7 +67,15 @@ public class EventDetailsActivity extends AppCompatActivity {
     public void onLocationClick (View view) {
         Intent intent = new Intent(this, MapsActivity.class);
         intent.putExtra("NEWLOCATION", location);
-        //setResult(Activity.RESULT_OK,intent);
         startActivity(intent);
     }
+
+    public void onJoinClick (View view) {
+        if (mCurrentUserJoinedEvents == null) {
+            mCurrentUserJoinedEvents = new UserJoinedRequest();
+            mCurrentUserJoinedEvents.userID = mCurrentUserId;
+        }
+        mCurrentUserJoinedEvents.joinedRequestsIDs.add(mCurrentEvent.ID);
+    }
+
 }

@@ -10,6 +10,7 @@
     <string name="join_button">Join!</string>
     <string name="help_request_tag">Tag</string>
     <string name="help_request_location">Location</string>
+    <string name="unjoin_button">Unjoin!</string>
     <string name="help_request_location_click">click to access maps</string>
     <string name="facebook_app_id">417727778567757</string>
 </resources>

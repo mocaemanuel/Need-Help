@@ -1,4 +1,5 @@
 package com.brainiac.mocae.needhelp;
+
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +8,9 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class AskHelpActivity extends AppCompatActivity {
@@ -107,6 +111,10 @@ public class AskHelpActivity extends AppCompatActivity {
         helpRequest.EndDate = txtEndDate.getText().toString();
         helpRequest.Tag = txtTag.getText().toString();
         helpRequest.Location = txtLocation.getText().toString();
+
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        helpRequest.AdminID = user.getUid();
 
         DataStorage.getInstance().saveRequest(helpRequest);
 

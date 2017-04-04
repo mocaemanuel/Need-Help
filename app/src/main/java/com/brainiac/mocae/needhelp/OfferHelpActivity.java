@@ -19,10 +19,8 @@ public class OfferHelpActivity extends ListActivity {
 
             final ListView listview = (ListView) findViewById(android.R.id.list);
 
-            final MySimpleArrayAdapter adapter = new MySimpleArrayAdapter(this, DataStorage.getInstance().getHelpRequests());
+            final MySimpleArrayAdapter adapter = new MySimpleArrayAdapter(this, DataStorage.getInstance().getHelpRequests(true));
             listview.setAdapter(adapter);
-
-            DataStorage mDataStorage = new DataStorage();
 
             listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
