@@ -19,7 +19,6 @@ public class HelpRequest{
     public String ID;
 }
 
-class UserJoinedRequest extends HelpRequest {
-    public String userID;
+class UserJoinedRequest {
     public List<String> joinedRequestsIDs = new ArrayList<>();
 }

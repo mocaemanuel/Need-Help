@@ -40,7 +40,8 @@
         <activity android:name=".OfferHelpActivity" />
         <activity android:name=".AskHelpActivity" />
         <activity android:name=".EventDetailsActivity" />
-        <activity android:name=".MapsActivity"></activity>
+        <activity android:name=".MapsActivity" />
+        <activity android:name=".UpcomingEventsActivity"></activity>
     </application>
 
 </manifest>

@@ -74,12 +74,14 @@ public class MainActivity extends AppCompatActivity {
                     profilePictureView.setVisibility(View.VISIBLE);
                     Profile profile = Profile.getCurrentProfile();
                     profilePictureView.setProfileId(profile.getId());
+                    DataStorage.getInstance().SetCurrentUser(user.getUid());
                     Log.d("NeedHelp", "onAuthStateChanged:signed_in:" + profile.getId());
                 } else {
                     // User is signed out
                     Profile.setCurrentProfile(null);
                     profilePictureView.setProfileId(null);
                     profilePictureView.setVisibility(View.INVISIBLE);
+                    DataStorage.getInstance().SetCurrentUser("");
                     Log.d("NeedHelp", "onAuthStateChanged:signed_out");
                 }
                 // ...
@@ -180,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onUpcomingEventsClick(View view) {
-        Intent intent = new Intent (this,OfferHelpActivity.class);
+        Intent intent = new Intent (this,UpcomingEventsActivity.class);
         startActivity(intent);
     }
 

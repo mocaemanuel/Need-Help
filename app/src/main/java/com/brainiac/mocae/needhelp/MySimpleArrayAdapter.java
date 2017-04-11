@@ -37,7 +37,6 @@ import java.util.ArrayList;
             peopleTxtView.setText(values.get(position).NumberOfPeople + "" + " persons requered");
             dateTxtView.setText(values.get(position).StartDate + " -- " + values.get(position).EndDate);
 
-
             return rowView;
         }
     }

@@ -23,9 +23,6 @@ public class EventDetailsActivity extends AppCompatActivity {
     private Button joinButton;
     private String location;
     private HelpRequest mCurrentEvent;
-    private UserJoinedRequest mCurrentUserJoinedEvents;
-
-    private String mCurrentUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +39,11 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        mCurrentUserId = user.getUid();
 
         int pos = getIntent().getIntExtra("HelpRequest", -1);
-        mCurrentEvent = DataStorage.getInstance().getHelpRequests(false).get(pos);
+        mCurrentEvent = DataStorage.getInstance().getRequest(pos);
 
-        boolean isJoined = DataStorage.getInstance().isCurrentUserJoinedOnEvent(mCurrentUserId, mCurrentEvent.ID);
+        boolean isJoined = DataStorage.getInstance().isCurrentUserJoinedOnEvent(DataStorage.getInstance().GetCurrentUserId(), mCurrentEvent.ID);
         joinButton.setText(isJoined ? R.string.unjoin_button : R.string.join_button);
 
         display(mCurrentEvent);
@@ -71,11 +67,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     }
 
     public void onJoinClick (View view) {
-        if (mCurrentUserJoinedEvents == null) {
-            mCurrentUserJoinedEvents = new UserJoinedRequest();
-            mCurrentUserJoinedEvents.userID = mCurrentUserId;
-        }
-        mCurrentUserJoinedEvents.joinedRequestsIDs.add(mCurrentEvent.ID);
+        DataStorage.getInstance().saveJoinedEvent(mCurrentEvent.ID);
     }
 
 }
