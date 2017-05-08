@@ -5,7 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.firebase.database.DatabaseReference;
 
 /**
  * Created by mocae on 4/8/2017.
@@ -20,9 +25,22 @@ public class UpcomingEventsActivity extends AppCompatActivity {
 
         final ListView listview = (ListView) findViewById(android.R.id.list);
 
-        //final MySimpleArrayAdapter adapter = new MySimpleArrayAdapter(this, DataStorage.getInstance().getHelpRequests(true));
-       // listview.setAdapter(adapter);
+        DatabaseReference mDatabase = DataStorage.getInstance().getRefHelpRequests();
+        ListAdapter firebaseAdapter = new FirebaseListAdapter<HelpRequest>(this, HelpRequest.class, R.layout.help_request_layout, mDatabase){
+            @Override
+            protected void populateView(View view, HelpRequest message, int x){
+                TextView nameTxtView = (TextView) view.findViewById(R.id.nameTxtView);
+                TextView peopleTxtView = (TextView) view.findViewById(R.id.peopleTxtView);
+                TextView dateTxtView = (TextView) view.findViewById(R.id.dateTxtView);
 
+                nameTxtView.setText(message.Name);
+                peopleTxtView.setText(message.NumberOfPeople + "" + " persons requered");
+                dateTxtView.setText(message.StartDate + " -- " + message.EndDate);
+
+                DataStorage.getInstance().addRequest(message);
+            }
+        };
+        listview.setAdapter(firebaseAdapter);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override

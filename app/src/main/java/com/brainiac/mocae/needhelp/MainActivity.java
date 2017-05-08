@@ -35,7 +35,8 @@ import android.widget.Toast;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class MainActivity extends AppCompatActivity {
+public class
+MainActivity extends AppCompatActivity {
 
     private CallbackManager mCallbackManager;
     private FirebaseAuth mAuth;

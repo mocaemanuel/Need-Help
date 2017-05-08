@@ -9,6 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/background"
     tools:context="com.brainiac.mocae.needhelp.MainActivity">
 
     <com.facebook.login.widget.ProfilePictureView
@@ -32,27 +33,30 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_centerVertical="true"
         android:gravity="center"
-        android:id="@+id/btnLayout">
+        android:id="@+id/btnLayout"
+        android:weightSum="1">
 
 
 
-        <ImageButton
-            android:layout_width="90dp"
+        <Button
+            android:layout_width="200dp"
             android:layout_height="90dp"
-            app:srcCompat="@drawable/offerhelp"
+            android:background="@drawable/offerhelp"
             android:layout_marginRight="70dp"
+            android:layout_gravity="left"
             android:id="@+id/offerHelpButton"
             android:onClick="onOfferHelpClick"/>
 
-        <ImageButton
-            android:layout_width="90dp"
+        <Button
+            android:layout_width="200dp"
             android:layout_height="90dp"
-            app:srcCompat="@drawable/needhelp"
+            android:layout_gravity="right"
+            android:background="@drawable/askhelp"
             android:id="@+id/askForHelpButton"
-            android:onClick="onAskHelpClick"/>
+            android:onClick="onAskHelpClick" />
     </LinearLayout>
 
     <Button
