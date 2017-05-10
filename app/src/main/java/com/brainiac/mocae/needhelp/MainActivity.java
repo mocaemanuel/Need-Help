@@ -71,7 +71,8 @@ MainActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null && Profile.getCurrentProfile() != null) {
-                    // User is signed ina
+                    // User is signed in
+                    DataStorage.getInstance().getJoinedEvents(user.toString());
                     profilePictureView.setVisibility(View.VISIBLE);
                     Profile profile = Profile.getCurrentProfile();
                     profilePictureView.setProfileId(profile.getId());

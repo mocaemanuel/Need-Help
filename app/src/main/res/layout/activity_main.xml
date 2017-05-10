@@ -56,7 +56,7 @@
             android:layout_gravity="right"
             android:background="@drawable/askhelp"
             android:id="@+id/askForHelpButton"
-            android:onClick="onAskHelpClick" />
+            android:onClick="onAskHelpClick"/>
     </LinearLayout>
 
     <Button

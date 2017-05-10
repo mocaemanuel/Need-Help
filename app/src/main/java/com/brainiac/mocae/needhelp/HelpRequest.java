@@ -22,3 +22,7 @@ public class HelpRequest{
 class UserJoinedRequest {
     public List<String> joinedRequestsIDs = new ArrayList<>();
 }
+
+class UserHelpRequest extends HelpRequest {
+    public boolean isJoined;
+}

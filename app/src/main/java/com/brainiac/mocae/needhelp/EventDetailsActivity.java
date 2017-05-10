@@ -28,6 +28,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_details);
+
         nameTxtView = (TextView) findViewById(R.id.nameTxtName);
         descriptionTxtView = (TextView) findViewById(R.id.descriptionTxtView);
         peopleTxtView = (TextView) findViewById(R.id.minRequiredPeopleTxtView);
@@ -67,7 +68,13 @@ public class EventDetailsActivity extends AppCompatActivity {
     }
 
     public void onJoinClick (View view) {
-        DataStorage.getInstance().saveJoinedEvent(mCurrentEvent.ID);
+        DataStorage.getInstance().saveJoinedEvent(mCurrentEvent.ID, new CallBack() {
+            @Override
+            public void onSuccess() {
+                boolean isJoined = DataStorage.getInstance().isCurrentUserJoinedOnEvent(DataStorage.getInstance().GetCurrentUserId(), mCurrentEvent.ID);
+                joinButton.setText(isJoined ? R.string.unjoin_button : R.string.join_button);
+            }
+        });
     }
 
 }

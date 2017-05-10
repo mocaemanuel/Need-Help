@@ -2,14 +2,18 @@ package com.brainiac.mocae.needhelp;
 
 import android.util.Log;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.Callable;
 
 /**
  * Created by mocae on 1/17/2017.
@@ -33,7 +37,6 @@ public class DataStorage {
         if (instance == null) {
             instance = new DataStorage();
         }
-
         return instance;
     }
 
@@ -44,6 +47,8 @@ public class DataStorage {
     }
 
     private ArrayList<HelpRequest> helpRequests = new ArrayList<>();
+
+    private ArrayList<HelpRequest> joinedHelpRequests = new ArrayList<>();
 
     private boolean gotJoinedEventList = false;
     private UserJoinedRequest mUserJoinedRequest = new UserJoinedRequest();
@@ -75,9 +80,9 @@ public class DataStorage {
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-                Log.d("NeedHelp", "joinedRequests");
+                Log.d("NeedHelp", "joinedRequests" + s);
                 mUserJoinedRequest = dataSnapshot.getValue(UserJoinedRequest.class);
+                getUserJoinedEvents(mUserJoinedRequest.joinedRequestsIDs);
             }
 
             @Override
@@ -105,6 +110,30 @@ public class DataStorage {
         return mUserJoinedRequest;
     }
 
+    public void getUserJoinedEvents(final List<String> joinedEventsId){
+        mDatabaseHelpRequests.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                dataSnapshot.getKey();
+
+                for (DataSnapshot ds : dataSnapshot.getChildren() ){
+                    UserHelpRequest hr = ds.getValue(UserHelpRequest.class);
+                    for (String id : joinedEventsId ){
+                        if (id.equals(hr.ID)) {
+                            joinedHelpRequests.add(hr);
+                            Log.d("idd", " sfsdf " + hr.ID);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     public DataStorage() {
         mDatabaseHelpRequests = FirebaseDatabase.getInstance().getReference().child("helpRequests");
         mDatabaseJoinRequests = FirebaseDatabase.getInstance().getReference().child("joinedRequests");
@@ -115,9 +144,21 @@ public class DataStorage {
         mDatabaseHelpRequests.child(request.ID).setValue(request);
     }
 
-    public void saveJoinedEvent(String helpRequestId)
+    public void saveJoinedEvent(String helpRequestId, final CallBack callBack)
     {
-       // mDatabaseJoinRequests.child(mCurrentUserId).setValue(userJoinedRequest);
+        if (mUserJoinedRequest.joinedRequestsIDs.contains(helpRequestId)) {
+            mUserJoinedRequest.joinedRequestsIDs.remove(helpRequestId);
+        } else {
+            mUserJoinedRequest.joinedRequestsIDs.add(helpRequestId);
+        }
+        mDatabaseJoinRequests.child(mCurrentUserId).setValue(mUserJoinedRequest).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("SuccessListener"," Success");
+                callBack.onSuccess();
+            }
+        });
+
     }
 
     public void addRequest(HelpRequest request) {
