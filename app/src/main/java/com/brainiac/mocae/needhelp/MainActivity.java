@@ -30,6 +30,8 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.security.MessageDigest;
@@ -42,11 +44,19 @@ MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private ProfilePictureView profilePictureView;
+    private Button OfferHelpButton;
+    private Button AskHelpButton;
+    private TextView AlertLogInTxtView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        OfferHelpButton= (Button) findViewById(R.id.offerHelpButton);
+        AskHelpButton = (Button) findViewById(R.id.askForHelpButton);
+        AlertLogInTxtView = (TextView) findViewById(R.id.alertLogInText);
+
         mAuth = FirebaseAuth.getInstance();
 
         try {
@@ -78,6 +88,10 @@ MainActivity extends AppCompatActivity {
                     profilePictureView.setProfileId(profile.getId());
                     DataStorage.getInstance().SetCurrentUser(user.getUid());
                     Log.d("NeedHelp", "onAuthStateChanged:signed_in:" + profile.getId());
+                    OfferHelpButton.setVisibility(View.VISIBLE);
+                    AskHelpButton.setVisibility(View.VISIBLE);
+                    AlertLogInTxtView.setVisibility(View.GONE);
+                    DataStorage.getInstance().getJoinedEvents(user + "");
                 } else {
                     // User is signed out
                     Profile.setCurrentProfile(null);
@@ -85,6 +99,9 @@ MainActivity extends AppCompatActivity {
                     profilePictureView.setVisibility(View.INVISIBLE);
                     DataStorage.getInstance().SetCurrentUser("");
                     Log.d("NeedHelp", "onAuthStateChanged:signed_out");
+                    OfferHelpButton.setVisibility(View.GONE);
+                    AskHelpButton.setVisibility(View.GONE);
+                    AlertLogInTxtView.setVisibility(View.VISIBLE);
                 }
                 // ...
             }
