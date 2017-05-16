@@ -3,6 +3,7 @@ package com.brainiac.mocae.needhelp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+
+import java.util.ArrayList;
 
 /**
  * Created by mocae on 4/8/2017.
@@ -26,22 +29,10 @@ public class UpcomingEventsActivity extends AppCompatActivity {
 
         final ListView listview = (ListView) findViewById(android.R.id.list);
 
-        DatabaseReference mDatabase = DataStorage.getInstance().getRefHelpRequests();
-        ListAdapter firebaseAdapter = new FirebaseListAdapter<HelpRequest>(this, HelpRequest.class, R.layout.help_request_layout, mDatabase){
-            @Override
-            protected void populateView(View view, HelpRequest message, int x){
-                TextView nameTxtView = (TextView) view.findViewById(R.id.nameTxtView);
-                TextView peopleTxtView = (TextView) view.findViewById(R.id.peopleTxtView);
-                TextView dateTxtView = (TextView) view.findViewById(R.id.dateTxtView);
+        final ArrayList<HelpRequest> database = DataStorage.getInstance().getJoinedEvents();
+        MySimpleArrayAdapter arrayAdapter = new MySimpleArrayAdapter(this,database);
 
-                nameTxtView.setText(message.Name);
-                peopleTxtView.setText(message.NumberOfPeople + "" + " persons requered");
-                dateTxtView.setText(message.StartDate + " -- " + message.EndDate);
-
-                DataStorage.getInstance().addRequest(message);
-            }
-        };
-        listview.setAdapter(firebaseAdapter);
+        listview.setAdapter(arrayAdapter);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -49,6 +40,7 @@ public class UpcomingEventsActivity extends AppCompatActivity {
                                     int position, long id) {
                 Intent intent = new Intent(UpcomingEventsActivity.this,EventDetailsActivity.class);
                 intent.putExtra("HelpRequest", position);
+                ///Log.d("onClick","Ask");
                 startActivity(intent);
             }
 

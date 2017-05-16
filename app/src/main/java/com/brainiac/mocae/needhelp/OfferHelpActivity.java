@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -46,6 +47,7 @@ public class OfferHelpActivity extends ListActivity {
                                     int position, long id) {
                 Intent intent = new Intent(OfferHelpActivity.this,EventDetailsActivity.class);
                 intent.putExtra("HelpRequest", position);
+                ///Log.d("onClick","Offer");
                 startActivity(intent);
             }
 
