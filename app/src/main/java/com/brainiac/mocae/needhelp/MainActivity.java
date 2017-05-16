@@ -44,15 +44,19 @@ MainActivity extends AppCompatActivity {
     private Button OfferHelpButton;
     private Button AskHelpButton;
     private TextView AlertLogInTxtView;
+    private Button UpcomingEvents;
+    private Button CreatedEvents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        OfferHelpButton= (Button) findViewById(R.id.offerHelpButton);
+        OfferHelpButton = (Button) findViewById(R.id.offerHelpButton);
         AskHelpButton = (Button) findViewById(R.id.askForHelpButton);
         AlertLogInTxtView = (TextView) findViewById(R.id.alertLogInText);
+        UpcomingEvents = (Button) findViewById(R.id.myUpcommingButton);
+        CreatedEvents = (Button) findViewById(R.id.myCreatedButton);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -87,6 +91,8 @@ MainActivity extends AppCompatActivity {
                     Log.d("NeedHelp", "onAuthStateChanged:signed_in:" + profile.getId());
                     OfferHelpButton.setVisibility(View.VISIBLE);
                     AskHelpButton.setVisibility(View.VISIBLE);
+                    UpcomingEvents.setVisibility(View.VISIBLE);
+                    CreatedEvents.setVisibility(View.VISIBLE);
                     AlertLogInTxtView.setVisibility(View.GONE);
                 } else {
                     // User is signed out
@@ -97,6 +103,8 @@ MainActivity extends AppCompatActivity {
                     Log.d("NeedHelp", "onAuthStateChanged:signed_out");
                     OfferHelpButton.setVisibility(View.GONE);
                     AskHelpButton.setVisibility(View.GONE);
+                    UpcomingEvents.setVisibility(View.GONE);
+                    CreatedEvents.setVisibility(View.GONE);
                     AlertLogInTxtView.setVisibility(View.VISIBLE);
                 }
                 // ...
@@ -201,5 +209,9 @@ MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void onCreatedEventsClick (View view){
+        Intent intent  =new Intent(this,CreatedEventsActivity.class);
+        startActivity(intent);
+    }
 
 }

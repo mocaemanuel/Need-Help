@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="6dip"
+    android:background="#A6FB9416"
     android:descendantFocusability="blocksDescendants"
     android:id="@+id/helpRequestTemplate">
 

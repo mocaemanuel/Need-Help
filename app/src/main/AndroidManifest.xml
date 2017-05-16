@@ -41,7 +41,8 @@
         <activity android:name=".AskHelpActivity" />
         <activity android:name=".EventDetailsActivity" />
         <activity android:name=".MapsActivity" />
-        <activity android:name=".UpcomingEventsActivity"></activity>
+        <activity android:name=".UpcomingEventsActivity" />
+        <activity android:name=".CreatedEventsActivity"></activity>
     </application>
 
 </manifest>
