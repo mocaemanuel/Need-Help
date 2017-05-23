@@ -8,6 +8,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -48,6 +49,8 @@ public class DataStorage {
     private ArrayList<HelpRequest> helpRequests = new ArrayList<>();
 
     private ArrayList<HelpRequest> joinedHelpRequests = new ArrayList<>();
+
+    private ArrayList<HelpRequest> createdEvents = new ArrayList<>();
 
     private boolean gotJoinedEventList = false;
     private UserJoinedRequest mUserJoinedRequest = new UserJoinedRequest();
@@ -109,6 +112,10 @@ public class DataStorage {
         return mUserJoinedRequest;
     }
 
+    public Query getCreatedEvents(){
+        return mDatabaseHelpRequests.orderByChild("AdminID").equalTo(mCurrentUserId);
+    }
+
     public void getUserJoinedEvents(final List<String> joinedEventsId){
         mDatabaseHelpRequests.addValueEventListener(new ValueEventListener() {
             @Override
@@ -151,10 +158,20 @@ public class DataStorage {
     {
         if (mUserJoinedRequest.joinedRequestsIDs.contains(helpRequestId)) {
             mUserJoinedRequest.joinedRequestsIDs.remove(helpRequestId);
+
             for (int i = 0; i < joinedHelpRequests.size(); i ++) {
                 HelpRequest hr = joinedHelpRequests.get(i);
                 if (hr.ID.equals(helpRequestId)) {
+                    hr.NumberOfJoinedPeople -= 1;
                     joinedHelpRequests.remove(hr);
+                    mDatabaseHelpRequests.child(hr.ID).setValue(hr);
+                    for (int j = 0; j< helpRequests.size(); j ++) {
+                        HelpRequest hr2 = helpRequests.get(j);
+                        if (hr2.ID == helpRequestId) {
+                            helpRequests.remove(j);
+                            helpRequests.add(hr);
+                        }
+                    }
                     break;
                 }
             }
@@ -170,6 +187,8 @@ public class DataStorage {
                         HelpRequest hr = helpRequests.get(i);
                         if (hr.ID == helpRequestId){
                             joinedHelpRequests.add(hr);
+                            hr.NumberOfJoinedPeople += 1;
+                            mDatabaseHelpRequests.child(hr.ID).setValue(hr);
                             break;
                         }
                     }
@@ -182,6 +201,13 @@ public class DataStorage {
 
     public void addRequest(HelpRequest request) {
         helpRequests.add(request);
+    }
+
+    public HelpRequest getHelpRequest (String id){
+        for (int i = 0; i < helpRequests.size(); i ++)
+            if (helpRequests.get(i).ID.equals(id))
+                return helpRequests.get(i);
+        return null;
     }
 
     public HelpRequest getRequest(int position) {

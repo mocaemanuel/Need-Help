@@ -27,6 +27,10 @@ public class UpcomingEventsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upcoming_events);
 
+        updateList();
+    }
+
+    private void updateList (){
         final ListView listview = (ListView) findViewById(android.R.id.list);
 
         final ArrayList<HelpRequest> database = DataStorage.getInstance().getJoinedEvents();
@@ -41,9 +45,14 @@ public class UpcomingEventsActivity extends AppCompatActivity {
                 Intent intent = new Intent(UpcomingEventsActivity.this,EventDetailsActivity.class);
                 intent.putExtra("HelpRequest", position);
                 ///Log.d("onClick","Ask");
-                startActivity(intent);
+                startActivityForResult(intent,1);
             }
 
         });
+    }
+
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent data){
+        updateList();
     }
 }

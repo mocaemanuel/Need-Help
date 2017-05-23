@@ -17,6 +17,7 @@ public class HelpRequest{
     public String Location;
     public String AdminID;
     public String ID;
+    public Integer NumberOfJoinedPeople = 0;
 }
 
 class UserJoinedRequest {

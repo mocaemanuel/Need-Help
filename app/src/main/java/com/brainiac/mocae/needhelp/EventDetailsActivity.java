@@ -20,9 +20,11 @@ public class EventDetailsActivity extends AppCompatActivity {
     private TextView endDateTxtView;
     private TextView tagTxtView;
     private TextView locationTxtView;
+    private TextView joinedPeopleTxtView;
     private Button joinButton;
     private String location;
     private HelpRequest mCurrentEvent;
+    private String mCurrentEventID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         nameTxtView = (TextView) findViewById(R.id.nameTxtName);
         descriptionTxtView = (TextView) findViewById(R.id.descriptionTxtView);
         peopleTxtView = (TextView) findViewById(R.id.minRequiredPeopleTxtView);
+        joinedPeopleTxtView = (TextView) findViewById(R.id.numberOfJoinedPeopleTxtView);
         startDateTxtView = (TextView) findViewById(R.id.startDateTxtView);
         endDateTxtView = (TextView) findViewById(R.id.endDateTxtView);
         tagTxtView = (TextView) findViewById(R.id.tagTxtView);
@@ -54,11 +57,13 @@ public class EventDetailsActivity extends AppCompatActivity {
         nameTxtView.setText(helpRequest.Name);
         descriptionTxtView.setText(helpRequest.Description);
         peopleTxtView.setText("" + helpRequest.NumberOfPeople);
+        joinedPeopleTxtView.setText("" + helpRequest.NumberOfJoinedPeople + "/" + helpRequest.NumberOfPeople);
         startDateTxtView.setText(helpRequest.StartDate);
         endDateTxtView.setText(helpRequest.EndDate);
         tagTxtView.setText(helpRequest.Tag);
         locationTxtView.setText(helpRequest.Location);
         location = helpRequest.Location;
+        mCurrentEventID = helpRequest.ID;
     }
 
     public void onLocationClick (View view) {
@@ -73,6 +78,8 @@ public class EventDetailsActivity extends AppCompatActivity {
             public void onSuccess() {
                 boolean isJoined = DataStorage.getInstance().isCurrentUserJoinedOnEvent(DataStorage.getInstance().GetCurrentUserId(), mCurrentEvent.ID);
                 joinButton.setText(isJoined ? R.string.unjoin_button : R.string.join_button);
+                mCurrentEvent = DataStorage.getInstance().getHelpRequest(mCurrentEventID);
+                display(mCurrentEvent);
             }
         });
     }
