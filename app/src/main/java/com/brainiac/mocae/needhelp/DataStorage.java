@@ -21,14 +21,13 @@ import java.util.UUID;
 
 public class DataStorage {
     private static DataStorage instance = null;
-    private DatabaseReference mDatabaseHelpRequests;
-    private DatabaseReference mDatabaseJoinRequestsIds;
+    private DatabaseReference mDatabaseRefHelpRequests;
+    private DatabaseReference mDatabaseRefJoinRequestsIds;
     private String mCurrentUserId;
 
     public void SetCurrentUser(String currentUserId) {
         mCurrentUserId = currentUserId;
     }
-
     public String GetCurrentUserId() {
         return mCurrentUserId;
     }
@@ -41,37 +40,37 @@ public class DataStorage {
     }
 
     public DatabaseReference getRefHelpRequests(){
-        helpRequests.clear();
-        mDatabaseHelpRequests = FirebaseDatabase.getInstance().getReference().child("helpRequests");
-        return mDatabaseHelpRequests;
+        helpRequestsList.clear();
+        mDatabaseRefHelpRequests = FirebaseDatabase.getInstance().getReference().child("helpRequestsList");
+        return mDatabaseRefHelpRequests;
     }
 
-    private ArrayList<HelpRequest> helpRequests = new ArrayList<>();
-
-    private ArrayList<HelpRequest> joinedHelpRequests = new ArrayList<>();
-
-    private ArrayList<HelpRequest> createdEvents = new ArrayList<>();
+    private ArrayList<HelpRequest> helpRequestsList = new ArrayList<>();
+    private ArrayList<HelpRequest> joinedHelpRequestsList = new ArrayList<>();
 
     private boolean gotJoinedEventList = false;
     private UserJoinedRequest mUserJoinedRequest = new UserJoinedRequest();
 
-    public boolean isCurrentUserJoinedOnEvent(String currentUserId, String eventId) {
-        DataStorage.getInstance().getJoinedEventsIds();
+    public void Reset() {
+        mCurrentUserId = "";
+        helpRequestsList.clear();
+        joinedHelpRequestsList.clear();
+        gotJoinedEventList = false;
+        mUserJoinedRequest = null;
+    }
 
-        boolean isJoined = false;
-
+    public boolean hasCurrentUserJoinedEvent(String eventId) {
         if (mUserJoinedRequest == null) {
-            return isJoined;
+            return false;
         }
 
         for (String joinedEventId : mUserJoinedRequest.joinedRequestsIDs) {
             if (joinedEventId.equals(eventId)) {
-                isJoined = true;
-                break;
+                return true;
             }
         }
 
-        return isJoined;
+        return false;
     }
 
     public UserJoinedRequest getJoinedEventsIds(){
@@ -106,27 +105,27 @@ public class DataStorage {
 
             }
         };
-        mDatabaseJoinRequestsIds.orderByChild("userID").equalTo(mCurrentUserId).addChildEventListener(childEventListener);
-        mDatabaseJoinRequestsIds.addChildEventListener(childEventListener);
+        mDatabaseRefJoinRequestsIds.orderByChild("userID").equalTo(mCurrentUserId).addChildEventListener(childEventListener);
+        mDatabaseRefJoinRequestsIds.addChildEventListener(childEventListener);
 
         return mUserJoinedRequest;
     }
 
     public Query getCreatedEvents(){
-        return mDatabaseHelpRequests.orderByChild("AdminID").equalTo(mCurrentUserId);
+        return mDatabaseRefHelpRequests.orderByChild("AdminID").equalTo(mCurrentUserId);
     }
 
     public void getUserJoinedEvents(final List<String> joinedEventsId){
-        mDatabaseHelpRequests.addValueEventListener(new ValueEventListener() {
+        mDatabaseRefHelpRequests.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 dataSnapshot.getKey();
-                joinedHelpRequests.clear();
+                joinedHelpRequestsList.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren() ){
                     UserHelpRequest hr = ds.getValue(UserHelpRequest.class);
                     for (String id : joinedEventsId ){
                         if (id.equals(hr.ID)) {
-                            joinedHelpRequests.add(hr);
+                            joinedHelpRequestsList.add(hr);
                             Log.d("idd", " joined " + hr.ID);
                         }
                     }
@@ -141,35 +140,37 @@ public class DataStorage {
     }
 
     public ArrayList<HelpRequest> getJoinedEvents (){
-        return joinedHelpRequests;
+        return joinedHelpRequestsList;
     }
 
     public DataStorage() {
-        mDatabaseHelpRequests = FirebaseDatabase.getInstance().getReference().child("helpRequests");
-        mDatabaseJoinRequestsIds = FirebaseDatabase.getInstance().getReference().child("joinedRequests");
+        mDatabaseRefHelpRequests = FirebaseDatabase.getInstance().getReference().child("helpRequestsList");
+        mDatabaseRefJoinRequestsIds = FirebaseDatabase.getInstance().getReference().child("joinedRequests");
     }
 
     public void saveRequest(HelpRequest request) {
         request.ID = UUID.randomUUID().toString();
-        mDatabaseHelpRequests.child(request.ID).setValue(request);
+        mDatabaseRefHelpRequests.child(request.ID).setValue(request);
     }
 
     public void saveJoinedEvent(final String helpRequestId, final CallBack callBack)
     {
+        if (mUserJoinedRequest == null)
+            mUserJoinedRequest = new UserJoinedRequest();
         if (mUserJoinedRequest.joinedRequestsIDs.contains(helpRequestId)) {
             mUserJoinedRequest.joinedRequestsIDs.remove(helpRequestId);
 
-            for (int i = 0; i < joinedHelpRequests.size(); i ++) {
-                HelpRequest hr = joinedHelpRequests.get(i);
+            for (int i = 0; i < joinedHelpRequestsList.size(); i ++) {
+                HelpRequest hr = joinedHelpRequestsList.get(i);
                 if (hr.ID.equals(helpRequestId)) {
+                    joinedHelpRequestsList.remove(hr);
                     hr.NumberOfJoinedPeople -= 1;
-                    joinedHelpRequests.remove(hr);
-                    mDatabaseHelpRequests.child(hr.ID).setValue(hr);
-                    for (int j = 0; j< helpRequests.size(); j ++) {
-                        HelpRequest hr2 = helpRequests.get(j);
+                    mDatabaseRefHelpRequests.child(hr.ID).setValue(hr);
+                    for (int j = 0; j< helpRequestsList.size(); j ++) {
+                        HelpRequest hr2 = helpRequestsList.get(j);
                         if (hr2.ID == helpRequestId) {
-                            helpRequests.remove(j);
-                            helpRequests.add(hr);
+                            helpRequestsList.remove(j);
+                            helpRequestsList.add(hr);
                         }
                     }
                     break;
@@ -178,17 +179,18 @@ public class DataStorage {
         } else {
             mUserJoinedRequest.joinedRequestsIDs.add(helpRequestId);
         }
-        mDatabaseJoinRequestsIds.child(mCurrentUserId).setValue(mUserJoinedRequest).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+        mDatabaseRefJoinRequestsIds.child(mCurrentUserId).setValue(mUserJoinedRequest).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d("SuccessListener"," Success");
                 if (mUserJoinedRequest.joinedRequestsIDs.contains(helpRequestId)){
-                    for (int i = 0; i< helpRequests.size(); i ++){
-                        HelpRequest hr = helpRequests.get(i);
+                    for (int i = 0; i< helpRequestsList.size(); i ++){
+                        HelpRequest hr = helpRequestsList.get(i);
                         if (hr.ID == helpRequestId){
-                            joinedHelpRequests.add(hr);
                             hr.NumberOfJoinedPeople += 1;
-                            mDatabaseHelpRequests.child(hr.ID).setValue(hr);
+                            joinedHelpRequestsList.add(hr);
+                            mDatabaseRefHelpRequests.child(hr.ID).setValue(hr);
                             break;
                         }
                     }
@@ -200,20 +202,50 @@ public class DataStorage {
     }
 
     public void addRequest(HelpRequest request) {
-        helpRequests.add(request);
+        helpRequestsList.add(request);
     }
 
     public HelpRequest getHelpRequest (String id){
-        for (int i = 0; i < helpRequests.size(); i ++)
-            if (helpRequests.get(i).ID.equals(id))
-                return helpRequests.get(i);
+        for (int i = 0; i < helpRequestsList.size(); i ++)
+            if (helpRequestsList.get(i).ID.equals(id))
+                return helpRequestsList.get(i);
         return null;
     }
 
-    public HelpRequest getRequest(int position) {
-        if (position < 0 || position > helpRequests.size())
+    public HelpRequest getJoinedRequest (String position){
+        int pos = Integer.parseInt(position);
+        if (pos < 0 || pos > joinedHelpRequestsList.size())
             return null;
 
-        return helpRequests.get(position);
+        return joinedHelpRequestsList.get(pos);
+    }
+
+    public HelpRequest getRequest(String position) {
+        int pos = Integer.parseInt(position);
+        if (pos < 0 || pos > helpRequestsList.size())
+            return null;
+
+        return helpRequestsList.get(pos);
+    }
+
+    public HelpRequest getCreatedRequest (String id){
+        for (int i = 0; i < helpRequestsList.size(); i ++){
+            if (helpRequestsList.get(i).ID.equals(id))
+                return helpRequestsList.get(i);
+        }
+
+        return null;
+    }
+
+    public void deleteRequest (HelpRequest helpRequest){
+        HelpRequest hr = null;
+        for (int i = 0; i < helpRequestsList.size(); i ++){
+            hr = helpRequestsList.get(i);
+            if (hr.ID.equals(helpRequest.ID)) {
+                helpRequestsList.remove(i);
+                mDatabaseRefHelpRequests.child(hr.ID).setValue(null);
+                return;
+            }
+        }
     }
 }

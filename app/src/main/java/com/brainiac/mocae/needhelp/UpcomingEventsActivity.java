@@ -43,7 +43,7 @@ public class UpcomingEventsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
                 Intent intent = new Intent(UpcomingEventsActivity.this,EventDetailsActivity.class);
-                intent.putExtra("HelpRequest", position);
+                intent.putExtra("HelpRequest", position + "|JOINED");
                 ///Log.d("onClick","Ask");
                 startActivityForResult(intent,1);
             }

@@ -46,7 +46,7 @@ public class OfferHelpActivity extends ListActivity {
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
                 Intent intent = new Intent(OfferHelpActivity.this,EventDetailsActivity.class);
-                intent.putExtra("HelpRequest", position);
+                intent.putExtra("HelpRequest", position + "|OFFER");
                 ///Log.d("onClick","Offer");
                 startActivity(intent);
             }

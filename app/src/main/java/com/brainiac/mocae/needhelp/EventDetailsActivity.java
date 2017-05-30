@@ -1,6 +1,5 @@
 package com.brainiac.mocae.needhelp;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -41,14 +40,25 @@ public class EventDetailsActivity extends AppCompatActivity {
         locationTxtView = (TextView) findViewById(R.id.locationTxtView);
         joinButton = (Button) findViewById(R.id.joinEventBtn);
 
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = firebaseAuth.getCurrentUser();
+        String extra = getIntent().getStringExtra("HelpRequest");
+        String[] parts = extra.split("\\|");
+        String pos = parts[0];
+        String type = parts[1];
 
-        int pos = getIntent().getIntExtra("HelpRequest", -1);
-        mCurrentEvent = DataStorage.getInstance().getRequest(pos);
+        if (type.equals("JOINED")){
+            mCurrentEvent = DataStorage.getInstance().getJoinedRequest(pos);
+        } else if (type.equals("CREATED")) {
+            mCurrentEvent = DataStorage.getInstance().getCreatedRequest(pos);
+        } else {
+            mCurrentEvent = DataStorage.getInstance().getRequest(pos);
+        }
 
-        boolean isJoined = DataStorage.getInstance().isCurrentUserJoinedOnEvent(DataStorage.getInstance().GetCurrentUserId(), mCurrentEvent.ID);
-        joinButton.setText(isJoined ? R.string.unjoin_button : R.string.join_button);
+        if (mCurrentEvent.AdminID.equals(DataStorage.getInstance().GetCurrentUserId())){
+            joinButton.setText("Cancel request");
+        } else {
+            boolean isJoined = DataStorage.getInstance().hasCurrentUserJoinedEvent(mCurrentEvent.ID);
+            joinButton.setText(isJoined ? R.string.unjoin_button : R.string.join_button);
+        }
 
         display(mCurrentEvent);
     }
@@ -73,15 +83,21 @@ public class EventDetailsActivity extends AppCompatActivity {
     }
 
     public void onJoinClick (View view) {
-        DataStorage.getInstance().saveJoinedEvent(mCurrentEvent.ID, new CallBack() {
-            @Override
-            public void onSuccess() {
-                boolean isJoined = DataStorage.getInstance().isCurrentUserJoinedOnEvent(DataStorage.getInstance().GetCurrentUserId(), mCurrentEvent.ID);
-                joinButton.setText(isJoined ? R.string.unjoin_button : R.string.join_button);
-                mCurrentEvent = DataStorage.getInstance().getHelpRequest(mCurrentEventID);
-                display(mCurrentEvent);
-            }
-        });
+        if (mCurrentEvent.AdminID.equals(DataStorage.getInstance().GetCurrentUserId())){
+            DataStorage.getInstance().deleteRequest(mCurrentEvent);
+            Intent intent = new Intent (this,MainActivity.class);
+            startActivity(intent);
+        } else {
+            DataStorage.getInstance().saveJoinedEvent(mCurrentEvent.ID, new CallBack() {
+                @Override
+                public void onSuccess() {
+                    boolean isJoined = DataStorage.getInstance().hasCurrentUserJoinedEvent(mCurrentEvent.ID);
+                    joinButton.setText(isJoined ? R.string.unjoin_button : R.string.join_button);
+                    mCurrentEvent = DataStorage.getInstance().getHelpRequest(mCurrentEventID);
+                    display(mCurrentEvent);
+                }
+            });
+        }
     }
 
 }

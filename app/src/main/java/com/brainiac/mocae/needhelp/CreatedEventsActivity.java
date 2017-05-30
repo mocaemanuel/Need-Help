@@ -49,7 +49,8 @@ public class CreatedEventsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
                 Intent intent = new Intent(CreatedEventsActivity.this,EventDetailsActivity.class);
-                intent.putExtra("HelpRequest", position);
+                String ID = DataStorage.getInstance().getRequest(position + "").ID;
+                intent.putExtra("HelpRequest", ID + "|CREATED");
                 startActivity(intent);
             }
 

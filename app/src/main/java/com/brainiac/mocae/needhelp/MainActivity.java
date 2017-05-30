@@ -99,7 +99,7 @@ MainActivity extends AppCompatActivity {
                     Profile.setCurrentProfile(null);
                     profilePictureView.setProfileId(null);
                     profilePictureView.setVisibility(View.INVISIBLE);
-                    DataStorage.getInstance().SetCurrentUser("");
+                    DataStorage.getInstance().Reset();
                     Log.d("NeedHelp", "onAuthStateChanged:signed_out");
                     OfferHelpButton.setVisibility(View.GONE);
                     AskHelpButton.setVisibility(View.GONE);
