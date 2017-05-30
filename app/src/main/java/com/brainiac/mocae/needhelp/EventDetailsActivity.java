@@ -54,7 +54,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         }
 
         if (mCurrentEvent.AdminID.equals(DataStorage.getInstance().GetCurrentUserId())){
-            joinButton.setText("Cancel request");
+            joinButton.setText(R.string.cancel_request);
         } else {
             boolean isJoined = DataStorage.getInstance().hasCurrentUserJoinedEvent(mCurrentEvent.ID);
             joinButton.setText(isJoined ? R.string.unjoin_button : R.string.join_button);
@@ -64,14 +64,14 @@ public class EventDetailsActivity extends AppCompatActivity {
     }
 
     private void display (HelpRequest helpRequest) {
-        nameTxtView.setText(helpRequest.Name);
-        descriptionTxtView.setText(helpRequest.Description);
-        peopleTxtView.setText("" + helpRequest.NumberOfPeople);
-        joinedPeopleTxtView.setText("" + helpRequest.NumberOfJoinedPeople + "/" + helpRequest.NumberOfPeople);
-        startDateTxtView.setText(helpRequest.StartDate);
-        endDateTxtView.setText(helpRequest.EndDate);
-        tagTxtView.setText(helpRequest.Tag);
-        locationTxtView.setText(helpRequest.Location);
+        nameTxtView.setText("   " + helpRequest.Name);
+        descriptionTxtView.setText("   " + helpRequest.Description);
+        peopleTxtView.setText("   " + helpRequest.NumberOfPeople);
+        joinedPeopleTxtView.setText("   " + helpRequest.NumberOfJoinedPeople + "/" + helpRequest.NumberOfPeople);
+        startDateTxtView.setText("   " + helpRequest.StartDate);
+        endDateTxtView.setText("   " + helpRequest.EndDate);
+        tagTxtView.setText("   " + helpRequest.Tag);
+        locationTxtView.setText("   " + helpRequest.Location);
         location = helpRequest.Location;
         mCurrentEventID = helpRequest.ID;
     }

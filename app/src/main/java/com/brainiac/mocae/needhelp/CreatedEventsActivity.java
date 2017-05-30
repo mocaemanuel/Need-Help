@@ -37,7 +37,31 @@ public class CreatedEventsActivity extends AppCompatActivity {
 
                 nameTxtView.setText(message.Name);
                 peopleTxtView.setText(message.NumberOfPeople + "" + " persons requered");
-                dateTxtView.setText(message.StartDate + " -- " + message.EndDate);
+
+                String startDateParts[] = message.StartDate.split("\\/");
+                String endDateParts[] = message.EndDate.split("\\/");
+                String startDateTimeParts[] = startDateParts[2].split("\\ ");
+                String endDateTimeParts[] = endDateParts[2].split("\\ ");
+                if (Integer.parseInt(startDateTimeParts[0]) == Integer.parseInt(endDateTimeParts[0])){
+                    if (Integer.parseInt(startDateParts[1]) == Integer.parseInt(endDateParts[1])){
+                        if (Integer.parseInt(startDateParts[0]) == Integer.parseInt(endDateParts[0])){
+                            dateTxtView.setText(startDateParts[0] + "/" + startDateParts [1] + "/" +
+                                    startDateTimeParts[0] + "  " + startDateTimeParts[1] + " -- " + endDateTimeParts[1]);
+                        } else {
+                            dateTxtView.setText(startDateParts[0] + "/" + startDateParts [1] + "  " +
+                                    startDateTimeParts [1] + " -- " + endDateParts[0] + "/" + endDateParts[1] + "  " + endDateTimeParts[1]  +
+                                    "  /" + startDateTimeParts[0]);
+                        }
+                    } else {
+                        dateTxtView.setText(startDateParts[0] + "/" + startDateParts [1] + "  " +
+                                startDateTimeParts [1] + " -- " + endDateParts[0] + "/" + endDateParts[1] + "  " + endDateTimeParts[1]  +
+                                "  /" + startDateTimeParts[0]);
+                    }
+                } else {
+                    dateTxtView.setText(message.StartDate + " -- " + message.EndDate);
+                }
+
+                DataStorage.getInstance().addRequest(message);
 
                 DataStorage.getInstance().addRequest(message);
             }

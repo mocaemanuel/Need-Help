@@ -8,13 +8,14 @@
     <string name="help_request_save">Save</string>
     <string name="upcoming_events">My Upcoming Events</string>
     <string name="join_button">Join!</string>
-    <string name="help_request_tag">Tag</string>
+    <string name="cancel_request">Cancel request</string>
+    <string name="help_request_tag">Tag (Optional)</string>
     <string name="help_request_location">Location</string>
     <string name="unjoin_button">Unjoin!</string>
     <string name="help_request_location_click">click to access maps</string>
     <string name="help_request_joined_people">Number of joined people</string>
     <string name="created_events">My Created Events</string>
-    <string name="alert_text">Hi, in order for us to connect you with other people, offer and ask for a helping had
-        please log in using facebook.</string>
+    <string name="alert_text">Hi, in order for us to connect you with other people, offer and ask for a
+        helping hand please log in using facebook.</string>
     <string name="facebook_app_id">417727778567757</string>
 </resources>

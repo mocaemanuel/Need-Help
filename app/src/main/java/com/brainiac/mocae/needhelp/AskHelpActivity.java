@@ -67,6 +67,15 @@ public class AskHelpActivity extends AppCompatActivity {
         txtEndDate = (EditText) findViewById(R.id.endDateEditText);
         txtEndDate.setOnClickListener(dateClickListener);
         }
+
+    private boolean validateTxtView (TextView txt){
+        if (txt.getText().toString().length() == 0){
+            txt.setError("fill in");
+            return false;
+        }
+        return true;
+    }
+
     private boolean validateEditText (EditText txt) {
         if (txt.getText().toString().length() == 0) {
             txt.setError("fill in");
@@ -99,7 +108,8 @@ public class AskHelpActivity extends AppCompatActivity {
                 validateEditText(txtDescription) == false ||
                 validateEditText(txtPeople) == false ||
                 validateEditText(txtStartDate) == false ||
-                validateEditText(txtTag) == false) {
+                validateEditText(txtEndDate) == false  ||
+                validateTxtView(txtLocation) == false) {
             return ;
         }
 
