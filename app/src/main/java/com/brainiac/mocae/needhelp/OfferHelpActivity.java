@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
@@ -61,7 +62,19 @@ public class OfferHelpActivity extends ListActivity {
                 DataStorage.getInstance().addRequest(message);
           }
         };
+        listview.setFocusable(false);
+        listview.setFocusableInTouchMode(false);
         listview.setAdapter(firebaseAdapter);
+
+        listview.setOnTouchListener(new View.OnTouchListener(){
+
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                Log.d("touch","false" );
+                return false;
+            }
+        });
+
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override

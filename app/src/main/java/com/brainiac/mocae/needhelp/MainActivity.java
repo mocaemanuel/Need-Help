@@ -17,6 +17,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -51,6 +52,9 @@ MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        String token = FirebaseInstanceId.getInstance().getToken();
+        Log.d("token"," first: " + token);
 
         OfferHelpButton = (Button) findViewById(R.id.offerHelpButton);
         AskHelpButton = (Button) findViewById(R.id.askForHelpButton);
@@ -146,6 +150,7 @@ MainActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     private void handleFacebookAccessToken(AccessToken token) {
