@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
+    android:layout_margin="15dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="6dip"
-    android:background="#A6FB9416"
+    android:background="#A6CCFFCC"
     android:descendantFocusability="blocksDescendants"
     android:id="@+id/helpRequestTemplate">
 

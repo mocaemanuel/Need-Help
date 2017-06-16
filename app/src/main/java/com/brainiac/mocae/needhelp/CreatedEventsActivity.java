@@ -3,6 +3,7 @@ package com.brainiac.mocae.needhelp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
@@ -16,7 +17,6 @@ import com.google.firebase.database.Query;
 import java.util.ArrayList;
 
 public class CreatedEventsActivity extends AppCompatActivity {
-    private MySimpleArrayAdapter arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,18 +50,16 @@ public class CreatedEventsActivity extends AppCompatActivity {
                         } else {
                             dateTxtView.setText(startDateParts[0] + "/" + startDateParts [1] + "  " +
                                     startDateTimeParts [1] + " -- " + endDateParts[0] + "/" + endDateParts[1] + "  " + endDateTimeParts[1]  +
-                                    "  /" + startDateTimeParts[0]);
+                                    "   " + startDateTimeParts[0]);
                         }
                     } else {
                         dateTxtView.setText(startDateParts[0] + "/" + startDateParts [1] + "  " +
                                 startDateTimeParts [1] + " -- " + endDateParts[0] + "/" + endDateParts[1] + "  " + endDateTimeParts[1]  +
-                                "  /" + startDateTimeParts[0]);
+                                "   " + startDateTimeParts[0]);
                     }
                 } else {
                     dateTxtView.setText(message.StartDate + " -- " + message.EndDate);
                 }
-
-                DataStorage.getInstance().addRequest(message);
 
                 DataStorage.getInstance().addRequest(message);
             }
@@ -73,7 +71,9 @@ public class CreatedEventsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
                 Intent intent = new Intent(CreatedEventsActivity.this,EventDetailsActivity.class);
+                position = position + 1;
                 String ID = DataStorage.getInstance().getRequest(position + "").ID;
+                Log.d("ID", "ERROR" + ID);
                 intent.putExtra("HelpRequest", ID + "|CREATED");
                 startActivity(intent);
             }

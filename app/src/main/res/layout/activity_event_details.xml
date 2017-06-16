@@ -8,11 +8,13 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/bgbg"
     tools:context="com.brainiac.mocae.needhelp.EventDetailsActivity">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#A6CCFFCC">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -22,80 +24,90 @@
             <TextView
                 android:text="@string/help_request_name"
                 android:layout_width="match_parent"
-                android:textColor="#123456"
+                android:textColor="#6E6E6E"
+                android:layout_marginLeft="10dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 style="@android:style/TextAppearance.DeviceDefault.Large"/>
 
             <TextView
                 android:text=" "
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:id="@+id/nameTxtName"
                 style="@android:style/TextAppearance.DeviceDefault.Large"/>
 
             <TextView
                 android:text="@string/help_request_description"
-                android:textColor="#123456"
+                android:textColor="#6E6E6E"
+                android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 style="@android:style/TextAppearance.DeviceDefault.Large" />
 
             <TextView
                 android:text=" "
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="5dp"
                 android:id="@+id/descriptionTxtView"
                 style="@android:style/TextAppearance.DeviceDefault.Large" />
 
             <TextView
                 android:text="@string/help_request_people"
                 android:layout_width="match_parent"
-                android:textColor="#123456"
+                android:textColor="#6E6E6E"
+                android:layout_marginLeft="10dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 style="@android:style/TextAppearance.DeviceDefault.Large" />
 
             <TextView
                 android:text=" "
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="5dp"
                 android:id="@+id/minRequiredPeopleTxtView"
                 style="@android:style/TextAppearance.DeviceDefault.Large" />
 
             <TextView
                 android:text="@string/help_request_joined_people"
                 android:layout_width="match_parent"
-                android:textColor="#123456"
+                android:textColor="#6E6E6E"
+                android:layout_marginLeft="10dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 style="@android:style/TextAppearance.DeviceDefault.Large" />
 
             <TextView
                 android:text=""
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="5dp"
                 android:id="@+id/numberOfJoinedPeopleTxtView"
                 style="@android:style/TextAppearance.DeviceDefault.Large" />
 
             <TextView
                 android:text="@string/help_request_start_date"
                 android:layout_width="match_parent"
-                android:textColor="#123456"
+                android:textColor="#6E6E6E"
+                android:layout_marginLeft="10dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 style="@android:style/TextAppearance.DeviceDefault.Large" />
 
             <TextView
                 android:text=" "
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="5dp"
                 android:id="@+id/startDateTxtView"
                 style="@android:style/TextAppearance.DeviceDefault.Large" />
 
@@ -103,15 +115,17 @@
                 android:text="@string/help_request_end_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#123456"
-                android:layout_marginTop="20dp"
+                android:textColor="#6E6E6E"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 style="@android:style/TextAppearance.DeviceDefault.Large" />
 
             <TextView
                 android:text=" "
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="5dp"
                 android:id="@+id/endDateTxtView"
                 style="@android:style/TextAppearance.DeviceDefault.Large" />
 
@@ -119,15 +133,17 @@
                 android:text="@string/help_request_tag"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#123456"
-                android:layout_marginTop="20dp"
+                android:textColor="#6E6E6E"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 style="@android:style/TextAppearance.DeviceDefault.Large" />
 
             <TextView
                 android:text=" "
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="5dp"
                 android:id="@+id/tagTxtView"
                 style="@android:style/TextAppearance.DeviceDefault.Large" />
 
@@ -135,15 +151,17 @@
                 android:text="@string/help_request_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#123456"
-                android:layout_marginTop="20dp"
+                android:textColor="#6E6E6E"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
                 style="@android:style/TextAppearance.DeviceDefault.Large" />
 
             <TextView
                 android:text=" "
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="5dp"
                 android:id="@+id/locationTxtView"
                 android:onClick="onLocationClick"
                 style="@android:style/TextAppearance.DeviceDefault.Large" />
@@ -152,8 +170,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/join_button"
-                android:textColor="#123456"
+                android:textColor="#FF123456"
                 android:layout_marginTop="20dp"
+                android:layout_margin="5dp"
                 android:id="@+id/joinEventBtn"
                 android:onClick="onJoinClick"/>
 

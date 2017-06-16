@@ -8,12 +8,12 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/background2"
+    android:background="@drawable/bgbg"
     tools:context="com.brainiac.mocae.needhelp.MainActivity">
 
     <com.facebook.login.widget.ProfilePictureView
         android:id="@+id/profilePictureView"
-        android:background="#A6FB9416"
+        android:background="#A6CCFFCC"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -40,53 +40,66 @@
         android:weightSum="1">
 
 
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="90dp"
+                android:background="@drawable/offerhelpbtn"
+                android:layout_gravity="center"
+                android:id="@+id/offerHelpButton"
+                android:onClick="onOfferHelpClick"/>
 
-        <Button
-            android:layout_width="200dp"
-            android:layout_height="90dp"
-            android:background="@drawable/offerhelp"
-            android:layout_marginRight="70dp"
-            android:layout_gravity="left"
-            android:id="@+id/offerHelpButton"
-            android:onClick="onOfferHelpClick"/>
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:text=" "/>
 
-        <Button
-            android:layout_width="200dp"
-            android:layout_height="90dp"
-            android:layout_gravity="right"
-            android:background="@drawable/askhelp"
-            android:id="@+id/askForHelpButton"
-            android:onClick="onAskHelpClick"/>
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="90dp"
+                android:layout_gravity="center"
+                android:background="@drawable/askhelpbtn"
+                android:id="@+id/askForHelpButton"
+                android:onClick="onAskHelpClick"/>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/alert_text"
-            android:textSize="23sp"
-            android:id="@+id/alertLogInText"
-            android:background="#A6FB9416"/>
+            android:background="#A6CCFFCC">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="130dp"
+                android:textColor="#FF6E6E6E"
+                android:layout_margin="10dp"
+                android:text="@string/alert_text"
+                android:textSize="23sp"
+                android:id="@+id/alertLogInText" />
+
+        </LinearLayout>
     </LinearLayout>
 
     <Button
         android:text="@string/upcoming_events"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50sp"
+        android:textColor="#FF6E6E6E"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="90dp"
         android:textSize="30sp"
-        android:background="#A6FB9416"
+        android:background="#A6CCFFCC"
         android:id="@+id/myUpcommingButton"
         android:onClick="onUpcomingEventsClick"
         style="@android:style/Widget.Button" />
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:textColor="#FF6E6E6E"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="30dp"
-        android:background="#A6FB9416"
+        android:background="#A6CCFFCC"
         android:text="@string/created_events"
         android:id="@+id/myCreatedButton"
         style="@android:style/Widget.Button"

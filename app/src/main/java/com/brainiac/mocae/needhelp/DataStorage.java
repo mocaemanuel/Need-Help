@@ -230,8 +230,9 @@ public class DataStorage {
 
     public HelpRequest getCreatedRequest (String id){
         for (int i = 0; i < helpRequestsList.size(); i ++){
-            if (helpRequestsList.get(i).ID.equals(id))
-                return helpRequestsList.get(i);
+            HelpRequest hr = helpRequestsList.get(i);
+            if (hr.ID.equals(id))
+                return hr;
         }
 
         return null;

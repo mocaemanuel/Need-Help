@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Need Help</string>
+    <string name="help_request_name"> Nume</string>
+    <string name="help_request_description"> Descriere</string>
+    <string name="help_request_people"> Numarul minim de oameni</string>
+    <string name="help_request_start_date"> Data de inceput</string>
+    <string name="help_request_end_date"> Data de sfarsit</string>
+    <string name="help_request_save">Salveaza</string>
+    <string name="upcoming_events">Evenimente viitoare</string>
+    <string name="join_button">Inregistrare!</string>
+    <string name="cancel_request">Sterge cererea</string>
+    <string name="help_request_tag"> Eticheta (Optional)</string>
+    <string name="help_request_location"> Locatie</string>
+    <string name="unjoin_button">Anuleaza inregistrarea</string>
+    <string name="help_request_location_click">apasati pentru a accesa harta</string>
+    <string name="help_request_joined_people"> Numarul de persoane inregistrate</string>
+    <string name="created_events">Cererile mele</string>
+    <string name="maps_button">Gata</string>
+    <string name="alert_text">  Salut, pentru ca noi sa te conectam
+        cu alte peroane, pentru a oferi si cere o mana de ajutor, te rugam sa te inregistrezi
+        folosind contul Facebook.</string>
+    <string name="facebook_app_id">417727778567757</string>
+</resources>

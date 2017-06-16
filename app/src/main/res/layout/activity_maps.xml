@@ -10,7 +10,9 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="OK"
+        android:text="@string/maps_button"
+        android:textSize="20sp"
+        android:background="#A6CCFFCC"
         android:onClick="onOkClick"/>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"

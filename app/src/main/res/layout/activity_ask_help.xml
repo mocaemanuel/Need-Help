@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/background2"
+    android:background="@drawable/bgbg"
     tools:context="com.brainiac.mocae.needhelp.AskHelpActivity">
 
     <ScrollView
@@ -19,25 +19,29 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#A6FB9416">
+            android:background="#A6CCFFCC">
 
             <TextView
                 android:text="@string/help_request_name"
                 style="@android:style/TextAppearance.DeviceDefault.Large"
                 android:layout_width="match_parent"
-                android:textColor="#123456"
+                android:layout_marginLeft="10dp"
+                android:textColor="#6E6E6E"
                 android:layout_height="wrap_content" />
 
             <EditText
                 style="@android:style/TextAppearance.DeviceDefault.Large"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="5dp"
                 android:inputType="text"
                 android:id="@+id/nameEditText" />
 
             <TextView
                 android:text="@string/help_request_description"
-                android:textColor="#123456"
+                android:layout_marginLeft="10dp"
+                android:textColor="#6E6E6E"
                 style="@android:style/TextAppearance.DeviceDefault.Large"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -48,13 +52,16 @@
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
                 android:gravity="top|left"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="5dp"
                 android:lines="4"
                 android:maxLines="8"
                 android:id="@+id/descriptionEditText" />
 
             <TextView
                 android:text="@string/help_request_people"
-                android:textColor="#123456"
+                android:textColor="#6E6E6E"
+                android:layout_marginLeft="10dp"
                 style="@android:style/TextAppearance.DeviceDefault.Large"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -62,13 +69,16 @@
             <EditText
                 style="@android:style/TextAppearance.DeviceDefault.Large"
                 android:layout_width="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="5dp"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 android:id="@+id/minRequiredPeopleEditText" />
 
             <TextView
                 android:text="@string/help_request_start_date"
-                android:textColor="#123456"
+                android:layout_marginLeft="10dp"
+                android:textColor="#6E6E6E"
                 style="@android:style/TextAppearance.DeviceDefault.Large"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -79,12 +89,15 @@
                 android:layout_height="wrap_content"
                 android:inputType="date"
                 android:focusable="false"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="5dp"
                 android:id="@+id/dateEditText"
                 android:focusableInTouchMode="false"/>
 
             <TextView
                 android:text="@string/help_request_end_date"
-                android:textColor="#123456"
+                android:layout_marginLeft="10dp"
+                android:textColor="#6E6E6E"
                 style="@android:style/TextAppearance.DeviceDefault.Large"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -95,12 +108,15 @@
                 android:layout_height="wrap_content"
                 android:inputType="date"
                 android:focusable="false"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="5dp"
                 android:id="@+id/endDateEditText"
                 android:focusableInTouchMode="false"/>
 
             <TextView
                 android:text="@string/help_request_tag"
-                android:textColor="#123456"
+                android:layout_marginLeft="10dp"
+                android:textColor="#6E6E6E"
                 style="@android:style/TextAppearance.DeviceDefault.Large"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -110,11 +126,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="5dp"
                 android:id="@+id/tagEditText" />
 
             <TextView
                 android:text="@string/help_request_location"
-                android:textColor="#123456"
+                android:layout_marginLeft="10dp"
+                android:textColor="#6E6E6E"
                 style="@android:style/TextAppearance.DeviceDefault.Large"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -126,7 +145,9 @@
                 android:inputType="text"
                 android:textColor="#9D9FA2"
                 android:textStyle="italic"
+                android:layout_marginLeft="15dp"
                 android:text="@string/help_request_location_click"
+                android:layout_marginRight="5dp"
                 android:onClick="onLocationClick"
                 android:id="@+id/locationEditText" />
 
@@ -134,6 +155,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/help_request_save"
+                android:layout_margin="5dp"
                 android:textColor="#123456"
                 android:id="@+id/btnHelpRequestSave"
                 android:onClick="onBtnSaveHelpRequest"/>
